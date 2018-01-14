@@ -1,0 +1,7 @@
+{
+  "name": "led-control",
+  "short_name": "led-control",
+  "description": "LED web controller",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,0 +1,65 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="toggle-led">
+  <template>
+    <style>
+      .toggle-container{
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+      paper-toggle-button.toggle {
+      --paper-toggle-button-unchecked-bar-color:  black;
+      --paper-toggle-button-unchecked-button-color:  black;
+      --paper-toggle-button-unchecked-ink-color: black;
+      --paper-toggle-button-checked-bar-color:  green;
+      --paper-toggle-button-checked-button-color:  green;
+      --paper-toggle-button-checked-ink-color: green;
+    }
+    span {
+      margin-left: 1rem;
+      margin-right: 1rem;
+      color: white;
+    }
+    </style>
+
+    <iron-ajax id="toggleAPI"></iron-ajax>
+
+    <div class="toggle-container">
+      <span>OFF</span>
+      <paper-toggle-button id="pToggle" class="toggle"></paper-toggle-button>
+      <span>ON</span>
+    </div>
+  </template>
+  <script>
+    class ToggleLED extends Polymer.Element {
+      static get is() { return 'toggle-led'; }
+      static get properties() {
+        return {
+          title: {
+            type: String,
+            value: 'SmartLED Controller'
+          }
+        };
+      }
+      ready(){
+        super.ready();
+        this.addEventListener('change', this.toggleLEDCall);
+      }
+      toggleLEDCall(ev) {
+        if(this.$.pToggle.checked){
+          this.$.toggleAPI.url = "/color?color=white";
+          this.$.toggleAPI.generateRequest();
+        } else {
+          this.$.toggleAPI.url = "/off";
+          this.$.toggleAPI.generateRequest();
+        }
+      }
+    }
+
+    window.customElements.define(ToggleLED.is, ToggleLED);
+  </script>
+</dom-module>
