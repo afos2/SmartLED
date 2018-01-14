@@ -25,7 +25,6 @@ var ColorPicker = class extends TokenController {
         },
         form: body
       }
-
       rp(options).then((rtn)=>{
         res.json(rtn);
       }).error((err)=>{
