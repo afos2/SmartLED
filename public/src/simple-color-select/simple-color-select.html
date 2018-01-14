@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/neon-animation/web-animations.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="simple-color-select">
+  <template>
+    <style>
+      .slider-container{
+        margin-top: 2rem;
+        margin-left: 2rem;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 2rem;
+        align-items: center;
+      }
+      label {
+        color: white;
+      }
+    </style>
+
+    <iron-ajax id="colorAPI" auto method="POST" url="/color?color={{color}}"></iron-ajax>
+
+    <div class="slider-container">
+      <label for="pSlider">Select a basic color!</label>
+      <paper-dropdown-menu label="Basic Color" on-selected-item-changed="changeColor">
+        <paper-listbox slot="dropdown-content" class="dropdown-content">
+          <paper-item name="white">white</paper-item>
+          <paper-item name="red">red</paper-item>
+          <paper-item name="green">green</paper-item>
+          <paper-item name="blue">blue</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </div>
+  </template>
+  <script>
+    class SimpleColorPicker extends Polymer.Element {
+      static get is() { return 'simple-color-select'; }
+      static get properties() {
+        return {
+          color: {
+            type: String,
+            value: "white",
+            notify: true
+          }
+        };
+      }
+      changeColor(ev) {
+        if(ev.detail.value) {
+          this.color = ev.detail.value.innerHTML;
+        }
+      }
+    }
+
+    window.customElements.define(SimpleColorPicker.is, SimpleColorPicker);
+  </script>
+</dom-module>

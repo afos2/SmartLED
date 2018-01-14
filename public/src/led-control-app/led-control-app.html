@@ -1,5 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../toggle-led/toggle-led.html">
+<link rel="import" href="../brightness-slider/brightness-slider.html">
+<link rel="import" href="../simple-color-select/simple-color-select.html">
 
 <dom-module id="led-control-app">
   <template>
@@ -38,8 +40,21 @@
         max-width: 60%;
         color: rgb(50,50,50);
       }
+      .simple-control {
+        display: flex;
+        flex-direction: row;
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
+      }
+      .left-panel {
+        flex:1;
+        border-right: 1px solid white;
+      }
+      .right-panel {
+        flex:1;
+      }
     </style>
-    <h1>[[title]]!</h1>
+    <h1>[[title]]</h1>
     <div class="description">
       <img src="../images/iot.svg"/>
       <div class="desc-par">
@@ -48,6 +63,14 @@
       </div>
     </div>
     <toggle-led></toggle-led>
+    <div class="simple-control">
+      <div class="left-panel">
+        <brightness-slider></brightness-slider>
+      </div>
+      <div class="right-panel">
+        <simple-color-select></simple-color-select>
+      </div>
+    </div>
   </template>
 
   <script>

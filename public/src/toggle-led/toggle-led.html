@@ -8,8 +8,22 @@
       .toggle-container{
         margin-top: 2rem;
         display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        padding-bottom: 2rem;
+        border-bottom: 1px solid white;
+        align-items: center;
+      }
+      .inner-container {
         flex-direction: row;
-        justify-content: center;
+      }
+      .sub-title {
+        flex-direction: row;
+      }
+      .sub-title h3{
+        display: flex;
+        flex-direction: row;
+        color: white;
       }
       paper-toggle-button.toggle {
       --paper-toggle-button-unchecked-bar-color:  black;
@@ -26,24 +40,24 @@
     }
     </style>
 
-    <iron-ajax id="toggleAPI"></iron-ajax>
+    <iron-ajax method="POST" id="toggleAPI"></iron-ajax>
 
     <div class="toggle-container">
-      <span>OFF</span>
-      <paper-toggle-button id="pToggle" class="toggle"></paper-toggle-button>
-      <span>ON</span>
+      <div class="sub-title">
+        <h3>Toggle the LED on or off.</h3>
+      </div>
+      <div class="inner-container">
+        <span>OFF</span>
+        <paper-toggle-button id="pToggle" class="toggle" checked></paper-toggle-button>
+        <span>ON</span>
+      </div>
     </div>
   </template>
   <script>
     class ToggleLED extends Polymer.Element {
       static get is() { return 'toggle-led'; }
       static get properties() {
-        return {
-          title: {
-            type: String,
-            value: 'SmartLED Controller'
-          }
-        };
+        return {};
       }
       ready(){
         super.ready();

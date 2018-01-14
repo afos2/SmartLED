@@ -1,0 +1,50 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-slider/paper-slider.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="brightness-slider">
+  <template>
+    <style>
+      .slider-container{
+        margin-top: 2rem;
+        margin-left: 2rem;
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 2rem;
+        align-items: center;
+      }
+      paper-slider {
+        --paper-slider-height: 4px;
+      }
+      label {
+        color: white;
+      }
+    </style>
+
+    <iron-ajax method="POST" auto url="/brightness?lvl=[[lvl]]"></iron-ajax>
+
+    <div class="slider-container">
+      <label for="pSlider">Quickly adjust the brightness!</label>
+      <paper-slider id="pSlider" class="slider" min="1" max="255" value={{lvl}}></paper-slider>
+    </div>
+  </template>
+  <script>
+    class BrightnessSlider extends Polymer.Element {
+      static get is() { return 'brightness-slider'; }
+      static get properties() {
+        return {
+          lvl: {
+            type: Number,
+            value: 255,
+            notify: true
+          }
+        };
+      }
+      ready(){
+        super.ready();
+      }
+    }
+
+    window.customElements.define(BrightnessSlider.is, BrightnessSlider);
+  </script>
+</dom-module>
