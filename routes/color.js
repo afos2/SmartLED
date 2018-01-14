@@ -39,6 +39,6 @@ var ColorPicker = class extends TokenController {
 
 var controller = new ColorPicker();
 
-router.get('/', controller.colorSelect.bind(controller));  
+router.post('/', controller.colorSelect.bind(controller));  
 
 module.exports = router;

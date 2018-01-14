@@ -41,6 +41,6 @@ var OffController = class extends TokenController {
 
 var controller = new OffController();
 
-router.get('/', controller.shutOff.bind(controller));  
+router.post('/', controller.shutOff.bind(controller));  
 
 module.exports = router;

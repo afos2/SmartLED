@@ -9,6 +9,7 @@ var index = require('./routes/index');
 var off = require('./routes/off');
 var color = require('./routes/color');
 var rainbow = require('./routes/rainbow');
+var brightness = require('./routes/brightness');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/', index);
 app.use('/color', color);
 app.use('/off', off);
 app.use('/rainbow', rainbow);
+app.use('/brightness', brightness);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
