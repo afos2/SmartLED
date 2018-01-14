@@ -1,0 +1,68 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../toggle-led/toggle-led.html">
+
+<dom-module id="led-control-app">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      h1 {
+        color: white;
+        background-color: darkgray;
+        padding: 2rem;
+        text-align: center;
+        margin: 0;
+      }
+      .description {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        height: 200px;
+        background-color: white;
+      }
+      .desc-par {
+        margin-top: 1rem;
+        flex:2;
+        border-left: 1px solid rgb(240,240,240);
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      img {
+        flex: 1;
+      }
+      h3 {
+        margin: 0;
+        margin-left: 2rem;
+        max-width: 60%;
+        color: rgb(50,50,50);
+      }
+    </style>
+    <h1>[[title]]!</h1>
+    <div class="description">
+      <img src="../images/iot.svg"/>
+      <div class="desc-par">
+          <h3><em>Welcome to the IoT demo application. Here you are able to control an LED strip through a Polymer 2.0
+            application.</em></h3>
+      </div>
+    </div>
+    <toggle-led></toggle-led>
+  </template>
+
+  <script>
+    class LedControlApp extends Polymer.Element {
+      static get is() { return 'led-control-app'; }
+      static get properties() {
+        return {
+          title: {
+            type: String,
+            value: 'SmartLED Controller'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(LedControlApp.is, LedControlApp);
+  </script>
+</dom-module>
