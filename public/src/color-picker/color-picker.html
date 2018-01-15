@@ -1,0 +1,51 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/paper-swatch-picker/paper-swatch-picker.html">
+
+<dom-module id="color-picker">
+  <template>
+    <style>
+    </style>
+
+    <iron-ajax auto method="POST" url="/color?color={{color}}"></iron-ajax>
+
+    <paper-swatch-picker id="picker" on-color-changed="updateColor"></paper-swatch-picker>
+  </template>
+
+  <script>
+    class ColorPicker extends Polymer.Element {
+      static get is() { return 'color-picker'; }
+      static get properties() {
+        return {
+          color: {
+            type: String,
+            notify: true
+          }
+        };
+      }
+      hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        var r = parseInt(result[1], 16);
+        var g = parseInt(result[2], 16);
+        var b = parseInt(result[3], 16);
+        if(r<100){
+          r = '0'+r;
+          console.log('red',r);
+        } 
+        if(g<100){
+          g = '0'+g;
+          console.log('green', g);
+        } 
+        if(b<100){
+          b = '0'+b;
+          console.log('blue', b);
+        }
+        return r+''+g+''+b;
+      }
+      updateColor() {
+        this.color = this.hexToRgb(this.$.picker.color);
+      }
+    }
+
+    window.customElements.define(ColorPicker.is, ColorPicker);
+  </script>
+</dom-module>

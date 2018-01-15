@@ -22,6 +22,7 @@ void setup()
   Particle.function("off", setOff);
   Particle.function("rainbowCycle", setRainbow);
   Particle.function("color", setColor);
+  Particle.function("brightness", setBrightness);
 }
 
 void loop()
@@ -35,6 +36,9 @@ void rainbow(uint8_t wait) {
 
   for(j=0; j<256; j++) {
     for(i=0; i<strip.numPixels(); i++) {
+      if (!cycle){
+        break;
+      }
       strip.setPixelColor(i, Wheel((i+j) & 255));
     }
     strip.show();
@@ -43,6 +47,15 @@ void rainbow(uint8_t wait) {
   if (!cycle){
     setOff("off");
   }
+}
+
+int setBrightness(String lvl) {
+    if(lvl.toInt()>=1 && lvl.toInt()<=255) {
+        strip.setBrightness(lvl.toInt());
+        strip.show();
+        return 1;
+    }
+    return -1;
 }
 
 int setColor(String color) {
@@ -71,8 +84,21 @@ int setColor(String color) {
         }
         strip.show();
         return 1;
+    } else if(color.length() == 9) {
+        int r  = atoi (color.substring(0, 3).c_str());   
+        int g  = atoi (color.substring(3, 6).c_str());
+        int b  = atoi (color.substring(6, 9).c_str());
+        if(r<=0 || r>255 || g<=0 || g>255 || b<=0 || b>255) {
+            return -1;
+        }
+        for(i=0; i<strip.numPixels(); i++) {
+            strip.setPixelColor(i, strip.Color(r, g, b));
+        }
+        strip.show();
+        return 1;
+    } else {
+        return -1;
     }
-    return -1;
 }
 
 // Set strip to off;
