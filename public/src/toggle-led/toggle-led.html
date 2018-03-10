@@ -53,17 +53,29 @@
     class ToggleLED extends Polymer.Element {
       static get is() { return 'toggle-led'; }
       static get properties() {
-        return {};
+        return {
+          ledOn: {
+            type: Boolean,
+            notify: true,
+            observer: '_ledOn' 
+          }
+        };
       }
       ready(){
         super.ready();
         this.addEventListener('change', this.toggleLEDCall);
       }
+      _ledOn() {
+        if(this.ledOn)
+          this.$.pToggle.checked = true;
+      }
       toggleLEDCall(ev) {
         if(this.$.pToggle.checked){
+          this.ledOn = true;
           this.$.toggleAPI.url = "/color?color=white";
           this.$.toggleAPI.generateRequest();
         } else {
+          this.ledOn = false;
           this.$.toggleAPI.url = "/off";
           this.$.toggleAPI.generateRequest();
         }

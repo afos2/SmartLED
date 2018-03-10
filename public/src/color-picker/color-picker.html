@@ -31,6 +31,11 @@
           color: {
             type: String,
             notify: true
+          },
+          ledOn: {
+            type: Boolean,
+            notify: true,
+            observer: '_ledOn'  
           }
         };
       }
@@ -53,9 +58,16 @@
         }
         return r+''+g+''+b;
       }
+      _ledOn() {
+        if(!this.ledOn)
+          this.$.picker.color = "#000";
+      }
       updateColor() {
-        this.color = this.hexToRgb(this.$.picker.color);
-        this.$.colorChanger.generateRequest();
+        if(this.ledOn){
+          this.color = this.hexToRgb(this.$.picker.color);
+          this.ledOn = true;
+          this.$.colorChanger.generateRequest();
+        }
       }
     }
 

@@ -24,7 +24,7 @@
 
     <div class="slider-container">
       <label for="pSlider">Select a basic color!</label>
-      <paper-dropdown-menu label="Basic Color" on-selected-item-changed="changeColor">
+      <paper-dropdown-menu id="menu" label="Basic Color" on-selected-item-changed="changeColor">
         <paper-listbox slot="dropdown-content" class="dropdown-content">
           <paper-item name="white">white</paper-item>
           <paper-item name="red">red</paper-item>
@@ -43,14 +43,24 @@
             type: String,
             value: "white",
             notify: true
+          },
+          ledOn: {
+            type: Boolean,
+            notify: true,
+            observer: '_ledOn' 
           }
         };
       }
       changeColor(ev) {
         if(ev.detail.value) {
+          this.ledOn = true;
           this.color = ev.detail.value.innerHTML;
           this.$.colorAPI.generateRequest();
         }
+      }
+      _ledOn() {
+        if(!this.ledOn)
+          this.$.menu._setSelectedItem(null);
       }
     }
 

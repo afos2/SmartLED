@@ -33,16 +33,16 @@
     <h1>[[title]]</h1>
     <div class="wrapper">  
       <div class="tile">
-        <toggle-led></toggle-led>
+        <toggle-led led-on="{{ledOn}}"></toggle-led>
       </div>
       <div class="tile">
         <brightness-slider></brightness-slider> 
       </div>
       <div class="tile">
-        <simple-color-select></simple-color-select>
+        <simple-color-select led-on="{{ledOn}}"></simple-color-select>
       </div>
       <div class="tile">
-        <color-picker></color-picker>
+        <color-picker led-on="{{ledOn}}"></color-picker>
       </div>
     </div>
   </template>
@@ -55,6 +55,9 @@
           title: {
             type: String,
             value: 'SmartLED Controller'
+          },
+          ledOn : {
+            type: Boolean
           }
         };
       }
