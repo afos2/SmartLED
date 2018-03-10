@@ -4,11 +4,23 @@
 <dom-module id="color-picker">
   <template>
     <style>
+      .swatch-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+      paper-swatch-picker {
+        --paper-swatch-picker-icon-size: 150px;
+      }
     </style>
 
     <iron-ajax auto method="POST" url="/color?color={{color}}"></iron-ajax>
 
-    <paper-swatch-picker id="picker" on-color-changed="updateColor"></paper-swatch-picker>
+    <div class="swatch-container">
+      <paper-swatch-picker id="picker" verticle-align="middle" horizontal-align="center" on-color-changed="updateColor"></paper-swatch-picker>
+    </div>
   </template>
 
   <script>
