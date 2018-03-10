@@ -1,0 +1,6 @@
+applications:
+  - name: smartLED
+    buildpack: https://github.com/cloudfoundry/nodejs-buildpack
+    memory: 128M
+    path: ./
+    command: npm start

@@ -20,7 +20,7 @@
       }
     </style>
 
-    <iron-ajax id="colorAPI" auto method="POST" url="/color?color={{color}}"></iron-ajax>
+    <iron-ajax id="colorAPI" method="POST" url="/color?color={{color}}"></iron-ajax>
 
     <div class="slider-container">
       <label for="pSlider">Select a basic color!</label>
@@ -49,6 +49,7 @@
       changeColor(ev) {
         if(ev.detail.value) {
           this.color = ev.detail.value.innerHTML;
+          this.$.colorAPI.generateRequest();
         }
       }
     }

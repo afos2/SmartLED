@@ -20,11 +20,11 @@
       }
     </style>
 
-    <iron-ajax method="POST" auto url="/brightness?lvl=[[lvl]]"></iron-ajax>
+    <iron-ajax id="post" method="POST" url="/brightness?lvl=[[lvl]]"></iron-ajax>
 
     <div class="slider-container">
       <label for="pSlider">Quickly adjust the brightness!</label>
-      <paper-slider id="pSlider" class="slider" min="1" max="255" value={{lvl}}></paper-slider>
+      <paper-slider id="pSlider" class="slider" min="1" max="255" value={{lvl}} on-change="setLevel"></paper-slider>
     </div>
   </template>
   <script>
@@ -41,6 +41,9 @@
       }
       ready(){
         super.ready();
+      }
+      setLevel() {
+        this.$.post.generateRequest();
       }
     }
 

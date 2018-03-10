@@ -1,0 +1,117 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+
+<link rel="import" href="../led-control-app/led-control-app.html">
+
+<dom-module id="base-app">
+  <template>
+    <style>
+      #cont {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 3rem;
+      }
+      .login {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        padding-top: 2rem;
+        width: 320px;
+        height: 250px;
+        box-shadow: 0px 0px 29px 0px rgba(169,169,169,0.75);
+      }
+      paper-input {
+        width: 300px;
+      }
+      paper-button {
+        margin-top: 1rem;
+      }
+      #submit {
+        background-color: #03a9f4;
+        color: white;
+      }
+      #reset {
+        background-color: #f0f0f0;
+      }
+    </style>
+
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{data}}"
+        tail="{{tail}}">
+    </app-route>
+
+    <iron-pages selected="{{data.page}}" attr-for-selected="name">
+      <div id="cont" name="auth" route="{{route}}">
+        <div class="login">
+          <iron-form id="form">
+            <form>
+              <paper-input id="uname" name="uname" label="Name" value="" required></paper-input>
+              <paper-input id="pword" name="pword" label="Password" type="password" value="" required></paper-input>
+              <paper-button id="reset" on-tap="resetForm" raised>Reset</paper-button>
+              <paper-button id="submit" on-tap="submitLogin" raised>Submit</paper-button>
+            </form>
+            <div class="output"></div>
+          </iron-form>
+        </div>
+      </div>
+
+      <div name="home" route="{{route}}">
+        <led-control-app></led-control-app>      
+      </div>
+    </iron-pages>
+
+    
+    
+    <iron-ajax id="loginCall" method="POST" url="/login" headers='{"Content-Type": "application/json"}' on-response="handleResponse"></iron-ajax>
+  </template>
+
+  <script>
+    class BaseApp extends Polymer.Element {
+      static get is() { return 'base-app'; }
+      static get properties() {
+        return {
+        };
+      }
+      ready() {
+        super.ready();
+        var status = sessionStorage.getItem('user');
+        if(status!="authenticated") {
+          this.set('route.path', '/auth');
+        }
+        else {
+          this.resetForm();
+          this.set('route.path', '/home');          
+        }
+      }
+      handleResponse(ev) {
+        if(ev.detail.response.status=="authenticated") {
+          sessionStorage.setItem('user', ev.detail.response.status);
+          this.set('route.path', '/home');
+        }
+      }
+      resetForm () {
+        this.$.uname.value = '';
+        this.$.pword.value = '';
+      }
+      submitLogin () {
+        this.$.loginCall.body = JSON.stringify({
+          username: this.$.uname.value,
+          password: this.$.pword.value
+        });
+        this.$.loginCall.generateRequest();
+      }
+    }
+
+    window.customElements.define(BaseApp.is, BaseApp);
+  </script>
+</dom-module>

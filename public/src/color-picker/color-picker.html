@@ -16,7 +16,7 @@
       }
     </style>
 
-    <iron-ajax auto method="POST" url="/color?color={{color}}"></iron-ajax>
+    <iron-ajax id="colorChanger" method="POST" url="/color?color={{color}}"></iron-ajax>
 
     <div class="swatch-container">
       <paper-swatch-picker id="picker" verticle-align="middle" horizontal-align="center" on-color-changed="updateColor"></paper-swatch-picker>
@@ -55,6 +55,7 @@
       }
       updateColor() {
         this.color = this.hexToRgb(this.$.picker.color);
+        this.$.colorChanger.generateRequest();
       }
     }
 
