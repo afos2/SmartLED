@@ -66,6 +66,10 @@
         if(this.ledOn){
           this.color = this.hexToRgb(this.$.picker.color);
           this.ledOn = true;
+          var user = JSON.parse(sessionStorage.getItem('user'));
+          this.$.colorChanger.headers = {
+            user: user.id
+          }
           this.$.colorChanger.generateRequest();
         }
       }

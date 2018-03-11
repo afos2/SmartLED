@@ -94,7 +94,7 @@
       }
       ready() {
         super.ready();
-        var status = sessionStorage.getItem('user');
+        var status = sessionStorage.getItem('status');
         if(status!="authenticated") {
           this.set('route.path', '/auth');
         }
@@ -105,7 +105,8 @@
       }
       handleResponse(ev) {
         if(ev.detail.response.status=="authenticated") {
-          sessionStorage.setItem('user', ev.detail.response.status);
+          sessionStorage.setItem('status', ev.detail.response.status);
+          sessionStorage.setItem('user', JSON.stringify(ev.detail.response.user));
           this.set('route.path', '/home');
         }
       }

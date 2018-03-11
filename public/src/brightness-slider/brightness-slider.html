@@ -43,6 +43,10 @@
         super.ready();
       }
       setLevel() {
+        var user = JSON.parse(sessionStorage.getItem('user'));
+        this.$.post.headers = {
+          user: user.id
+        }
         this.$.post.generateRequest();
       }
     }

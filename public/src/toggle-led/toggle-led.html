@@ -70,6 +70,10 @@
           this.$.pToggle.checked = true;
       }
       toggleLEDCall(ev) {
+        var user = JSON.parse(sessionStorage.getItem('user'));
+        this.$.toggleAPI.headers = {
+          user: user.id
+        }
         if(this.$.pToggle.checked){
           this.ledOn = true;
           this.$.toggleAPI.url = "/color?color=white";

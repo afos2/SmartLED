@@ -55,6 +55,10 @@
         if(ev.detail.value) {
           this.ledOn = true;
           this.color = ev.detail.value.innerHTML;
+          var user = JSON.parse(sessionStorage.getItem('user'));
+          this.$.colorAPI.headers = {
+            user: user.id
+          }
           this.$.colorAPI.generateRequest();
         }
       }
