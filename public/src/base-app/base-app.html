@@ -57,7 +57,8 @@
         route="{{route}}"
         pattern="/:page"
         data="{{data}}"
-        tail="{{tail}}">
+        tail="{{tail}}"
+        on-data-changed="checkAuth">
     </app-route>
 
     <iron-pages selected="{{data.page}}" attr-for-selected="name">
@@ -94,12 +95,13 @@
       }
       ready() {
         super.ready();
+        this.checkAuth();
+      }
+      checkAuth(ev) {
         var status = sessionStorage.getItem('status');
         if(status!="authenticated") {
           this.set('route.path', '/auth');
-        }
-        else {
-          this.resetForm();
+        } else {
           this.set('route.path', '/home');          
         }
       }
@@ -120,6 +122,7 @@
           password: this.$.pword.value
         });
         this.$.loginCall.generateRequest();
+        this.resetForm(); 
       }
     }
 
